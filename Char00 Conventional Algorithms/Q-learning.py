@@ -57,7 +57,6 @@ def update_env(state,episode, step_counter):
         print(env)
         time.sleep(FRESH_TIME)
         return False, step_counter
-        
     
 def q_learning():
     q_table = build_q_table(N_STATE, ACTIONS)

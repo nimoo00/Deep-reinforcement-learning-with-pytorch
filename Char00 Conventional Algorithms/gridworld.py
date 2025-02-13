@@ -69,12 +69,12 @@ class GridWorld:
             raise ValueError('The shape of the matrix does not match with the shape of the world.')
         self.state_matrix = state_matrix
 
-    def setPosition(self, index_row=None, index_col=None):
-        ''' Set the position of the robot in a specific state.
+    # def setPosition(self, index_row=None, index_col=None):
+    #     ''' Set the position of the robot in a specific state.
 
-        '''
-        if(index_row is None or index_col is None): self.position = [np.random.randint(tot_row), np.random.randint(tot_col)]
-        else: self.position = [index_row, index_col]
+    #     '''
+    #     if(index_row is None or index_col is None): self.position = [np.random.randint(tot_row), np.random.randint(tot_col)]
+    #     else: self.position = [index_row, index_col]
 
     def render(self):
         ''' Print the current world in the terminal.
