@@ -6,10 +6,10 @@ import time
 
 ALPHA = 0.1
 GAMMA = 0.95
-EPSILION = 0.9
+EPSILION = 0.95
 N_STATE = 6
 ACTIONS = ['left', 'right']
-MAX_EPISODES = 200
+MAX_EPISODES = 50
 FRESH_TIME = 0.1
 
 def build_q_table(n_state, actions):
@@ -29,7 +29,9 @@ def choose_action(state, q_table):
         action_name = state_action.idxmax()
     return action_name
 
-def get_env_feedback(state, action):
+# current state, action으로 next state와 reward를 얻는다
+# current state, action으로 env와 상호작용한 결과를 얻는다
+def get_env_feedback(state, action): 
     if action=='right':
         if state == N_STATE-2:
             next_state = 'terminal'
@@ -46,6 +48,7 @@ def get_env_feedback(state, action):
         reward = -0.5
     return next_state, reward
 
+# env를 시각화
 def update_env(state,episode, step_counter):
     env = ['-'] *(N_STATE-1)+['T']
     if state =='terminal':
