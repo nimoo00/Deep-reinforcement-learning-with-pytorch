@@ -41,14 +41,14 @@ class Module(nn.Module):
         self.rewards = []
 
         self.gamma = GAMMA
-        os.makedirs('/AC_MountainCar-v0_Model/', exist_ok=True)
+        os.makedirs('./AC_MountainCar-v0_Model/', exist_ok=True)
 
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
         #x = F.relu(self.fc2(x))
 
-        probs = F.softmax(self.action_head(x))
+        probs = F.softmax(self.action_head(x),dim=-1)
         value = self.value_head(x)
         return probs, value
 
@@ -56,6 +56,8 @@ policy = Module()
 optimizer = Adam(policy.parameters(), lr=LEARNING_RATE)
 
 def plot(steps):
+    os.makedirs('/AC_MountainCar-v0_Model/', exist_ok=True)
+
     ax = plt.subplot(111)
     ax.cla()
     ax.grid()
@@ -67,7 +69,7 @@ def plot(steps):
     path = './AC_MountainCar-v0/' + 'RunTime' + str(RunTime) + '.jpg'
     if len(steps) % 200 == 0:
         plt.savefig(path)
-    plt.pause(0.0000001)
+    plt.pause(0.1)
 
 
 def select_action(state):
@@ -105,7 +107,7 @@ def finish_episode():
         value_loss.append(smooth_l1_loss(value, torch.tensor([r]) ))
 
     optimizer.zero_grad()
-    loss = torch.stack(policy_loss).sum() + torch.stack(policy_loss).sum()
+    loss = torch.stack(policy_loss).sum() + torch.stack(value_loss).sum()
     loss.backward()
     optimizer.step()
 
